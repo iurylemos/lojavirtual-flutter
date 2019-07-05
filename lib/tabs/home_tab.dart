@@ -13,17 +13,17 @@ class HomeTab extends StatelessWidget {
      * Retorna um container
      */
     Widget _buidBodyBack() => Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  //Gradiente vai ter duas cores, uma forte em cima e mais fraco em baixo
-                  colors: [
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            //Gradiente vai ter duas cores, uma forte em cima e mais fraco em baixo
+              colors: [
                 Color.fromARGB(255, 211, 118, 130),
                 Color.fromARGB(255, 253, 181, 168)
               ],
-                  //Dizendo o fim do gradiente
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomRight)),
-        );
+              //Dizendo o fim do gradiente
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight)),
+    );
 
     //Stack pois quero colocar um conteudo acima do meu fundo(DEGRADE)
     return Stack(
