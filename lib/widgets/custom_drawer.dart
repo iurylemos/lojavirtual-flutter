@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/tiles/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -41,10 +42,50 @@ class CustomDrawer extends StatelessWidget {
                       child: Text("Loja Virtual \nde Roupas",
                       style: TextStyle(fontSize:  34.0, fontWeight: FontWeight.bold),
                       ),
+                    ),
+                    //Textos que vão ficar abaixo do header
+                    Positioned(
+                      left: 0.0,
+                      bottom: 0.0,
+                      //Coluna pois um texto vai está em cima do outro
+                      child: Column(
+                        //Para que fique alinhado a esquerda
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("Olá,",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold
+                          ),
+                          ),
+                          //Criando o botão
+                          GestureDetector(
+                            child: Text(
+                              "Entre ou cadastre-se >",
+                              style: TextStyle(
+                                //cor primária do main que é o azul do tema
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            onTap: () {
+
+                            },
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
-              )
+              ),
+              /**Vou começar a implantação dos icones das paginas
+              E dependendo da pagina que eu estiver, ela vai estar selecionada */
+              Divider(),
+              DrawerTile(Icons.home, "Inicio"),
+              DrawerTile(Icons.list, "Produtos"),
+              DrawerTile(Icons.location_on, "Lojas"),
+              DrawerTile(Icons.playlist_add_check, "Meus Pedidos"),
             ],
           )
         ],
