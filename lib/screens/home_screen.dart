@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/tabs/home_tab.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -16,9 +17,8 @@ class HomeScreen extends StatelessWidget {
        */
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        Container(color: Colors.yellow,),
-        Container(color: Colors.red,),
-        Container(color: Colors.green,),
+        //Vou separar os componentes da pagina como se fossem TAB, ou seja GRID
+        HomeTab(),
       ],
     );
   }
