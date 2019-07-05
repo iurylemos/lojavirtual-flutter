@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -76,13 +78,51 @@ class HomeTab extends StatelessWidget {
                   );
                   //Caso eu tenha algum DADO
                 } else {
-                  print(snapshot.data.documents.length);
-                  return SliverToBoxAdapter(
-                    child: Container(
-                      height: 200.0,
-                      alignment: Alignment.center,
-                      child: Container()
-                    ),
+                  return SliverStaggeredGrid.count(
+                    /**
+                     * Estou criando um grid para colocar as imagens.
+                     * E botei o count pois sei o tamanho exato que quero colocar
+                     * No crosAxisCount vou dizer o tanto de blocos que tenho na
+                     * horizontal, como tenho dois blocos
+                     */
+                      crossAxisCount: 2,
+                    mainAxisSpacing: 1.0,
+                    crossAxisSpacing: 1.0,
+                    /** dimensões de cada uma das tiles e passar uma lista
+                     * Vou pegar cada um dos documentos e pegar o x e y
+                     * de cada um dos documentos,transforma-los do tipo
+                     * StaggeredTiles e colocar eles em uma lista
+                     * isso tudo com um comando que é o
+                     * snapshot.data.document que é a lista de documentos
+                     * e mapear a lista passando uma função anonima, que
+                     * recebe o documento e para cada um dos documentos na minha
+                     * lista, ela vai chamar a função (doc) {}
+                     * e essa função vai retornar um novo objeto para colocar na lista
+                     *
+                     * Estou transformando cada um dos documentos da lista
+                     * em um StaggeredTiles
+                      */
+                    staggeredTiles: snapshot.data.documents.map(
+                        (doc) {
+                          //Dentro dos parametros, coloco a dimensão em x e em Y
+                          //E com isso eu transformei em StaggeredTile
+                          return StaggeredTile.count(doc.data["x"], doc.data["y"]);
+                        }
+                        //Depois que eu peguei esse mapa, vou transformar-lo em lista
+                    ).toList(),
+                    children:
+                      //Passando um array de imagens para compor a grade.
+                      snapshot.data.documents.map(
+                          (doc) {
+                            //FadeInImage é para aparecer suavemente na tela
+                            return FadeInImage.memoryNetwork(
+                                placeholder: kTransparentImage,
+                                image: doc.data["image"],
+                                //fit pois quero que cobrir o espaço possível na tile
+                                fit: BoxFit.cover,
+                            );
+                          }
+                      ).toList(),
                   );
                 }
               },
