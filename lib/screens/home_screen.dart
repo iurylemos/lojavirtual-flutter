@@ -15,6 +15,8 @@ class HomeScreen extends StatelessWidget {
       controller: _pageController,
       /**Fisica para não permitir arrastar de tela em tela.
        * Vou controlar somente pelo código
+       *
+       * Passo esse controle de páginas para o  Drawer onde tem acesso as páginas de lá
        */
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
@@ -22,8 +24,12 @@ class HomeScreen extends StatelessWidget {
        //Scafold para suportar o navigationDrawler
         Scaffold(
           body: HomeTab(),
-          drawer: CustomDrawer(),
-        )
+          drawer: CustomDrawer(_pageController),
+        ),
+        //Criando paginas de testes com o Container.
+        Container(color: Colors.red,),
+        Container(color: Colors.black,),
+        Container(color: Colors.blue,),
       ],
     );
   }
