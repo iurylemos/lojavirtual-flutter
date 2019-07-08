@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/screens/categoria_screen.dart';
 
 class CategoriaTile extends StatelessWidget {
 
@@ -25,7 +26,13 @@ class CategoriaTile extends StatelessWidget {
       //Setinha do lado esquerdo é o trailing
       trailing: Icon(Icons.keyboard_arrow_right),
       onTap: () {
-
+        /**
+         * Aqui dentro eu passo o documento para a próxima tela de amostra
+         * que é o CategoriaScreen
+         */
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => CategoriaScreen(snapshot))
+          );
       },
     );
   }
