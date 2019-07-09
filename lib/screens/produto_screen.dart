@@ -11,6 +11,8 @@ class ProdutoScreen extends StatefulWidget {
   //Recebendo o produto aqui em cima
   final ProdutoDado produto;
 
+
+
   ProdutoScreen(this.produto);
 
   //Passando para o STATE que é o ESTADO
@@ -19,6 +21,7 @@ class ProdutoScreen extends StatefulWidget {
 }
 
 class _ProdutoScreenState extends State<ProdutoScreen> {
+
   /**
    * Se eu quiser acessar esse produto dentro do meu State
    * basta eu utilizar o widget.produto
@@ -30,6 +33,9 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
   //O estado está recebendo o produto e salvando aqui dentro
   _ProdutoScreenState(this.produto);
 
+  //Variavel para tamanho que o usuário tiver selecionado da roupa
+  String size;
+
   @override
   Widget build(BuildContext context) {
 
@@ -38,6 +44,8 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
      * Que é a cor primária, vou logo obter ela aqui
      */
       final Color primaryColor = Theme.of(context).primaryColor;
+
+
 
 
     //Scaffold para ter a barra la´no topo
@@ -79,6 +87,7 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
               //BackGround do ponto
               dotBgColor: Colors.transparent,
               dotColor: primaryColor,
+              boxFit: BoxFit.cover,
               //Para as imagens não mudar automaticamente as imagens.
               autoplay: false,
             ),
@@ -104,6 +113,64 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     color: primaryColor,
+                  ),
+                ),
+                //Espaçamento entre o preço e o tamanho que vou botar
+                SizedBox(height: 16.0,),
+                Text(
+                  "Tamanho",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+                SizedBox(
+                  height: 34.0,
+                  //Exibição dos quadados [M] [G] mas não quero colado
+                  child: GridView(
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    //Orientação do GridView
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        //Separar em uma linha
+                          crossAxisCount: 1,
+                        //Espaçamento aqui é na horizontal então vou colocar o main
+                        mainAxisSpacing: 8.0,
+                        //Divisão da altura pela largura
+                        childAspectRatio: 0.5
+                      ),
+                      //Como filho vou pegar o produto, a lista de tamanhos
+                      //Que me retorna String vou mapea-la e transformar-la em
+                      //outro tipo de lista
+                      children: produto.sizes.map(
+                          (s) {
+                              return GestureDetector(
+                                //Quando ele clicar na caixinha o tamanho vai ser o Size
+                                onTap: () {
+                                  setState(() {
+                                    size = s;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    //Os campos são um pouco arredondado.
+                                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                                    border: Border.all(
+                                      //Se a cor selecionada for igual a size
+                                      //Eu mostro a cor primaria, se não mostro o cinza básico
+                                      color: s == size ? primaryColor: Colors.grey[500],
+                                      width: 3.0,
+                                    )
+                                  ),
+                                  //Largura do container.
+                                  width: 50.0,
+                                  //Alinhamento do texto dentro do container
+                                  alignment: Alignment.center,
+                                  child: Text(s),
+                                ),
+                              );
+                          }
+                      ).toList(),
                   ),
                 )
               ],
