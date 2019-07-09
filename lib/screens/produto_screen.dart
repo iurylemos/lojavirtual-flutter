@@ -148,7 +148,11 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                                 //Quando ele clicar na caixinha o tamanho vai ser o Size
                                 onTap: () {
                                   setState(() {
-                                    size = s;
+                                    if(size == s) {
+                                     size = null;
+                                    }else {
+                                      size = s;
+                                    }
                                   });
                                 },
                                 child: Container(
@@ -171,6 +175,38 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                               );
                           }
                       ).toList(),
+                  ),
+                ),
+                //Colocando o botão para adicionar ao carrinho.
+                SizedBox(height: 16.0,),
+                //Tamanho do botão
+                SizedBox(
+                  height: 44.0,
+                  child: RaisedButton(
+                    /**
+                     * Vou fazer a seguinte validação, enquanto ele não escolher um tamanho
+                     * o botão fique desabilitado, e só quando ele escolher fique habilitado
+                     */
+                      onPressed: size != null ? () {} : null,
+                    child: Text("Adicionar ao Carrinho",
+                        style: TextStyle(fontSize: 18.0),
+                    ),
+                    color: primaryColor,
+                    textColor: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 16.0,),
+                Text(
+                  "Descrição:",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+                Text(
+                  produto.descricao,
+                  style: TextStyle(
+                    fontSize: 16.0
                   ),
                 )
               ],
