@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/dados/produto_dado.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class ProdutoScreen extends StatefulWidget {
 
@@ -31,7 +32,85 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Container();
+
+    /**
+     * Como vou utilizar a cor do tema em diversos pontos
+     * Que é a cor primária, vou logo obter ela aqui
+     */
+      final Color primaryColor = Theme.of(context).primaryColor;
+
+
+    //Scaffold para ter a barra la´no topo
+    /**
+     * essa daqui é a tela que quando clica em um produto nos camisetas
+     * Ela vem para cá, através do construtor que foi para o ESTADO
+     * que é esse aqui.
+     *
+     */
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(produto.titulo),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: <Widget>[
+          //Largura dividido pela altura
+          AspectRatio(
+            aspectRatio: 0.9,
+            child: Carousel(
+              /**No images passamos uma array de imagens
+              //Vou passar através do código e mapea-la
+              //Essa array de imagens, é uma array de url
+              //Vai ter os textos, vai ter os links de onde tem as imagens
+
+                  Resumindo peguei o URL em cada um dos array das imagens
+                  E transformei em uma imagem vinda do netWork, transformei em
+                  lista no final.
+               */
+
+              images: produto.imagens.map((url) {
+                return NetworkImage(url);
+              }).toList(),
+              //DotSize é o tamanho do ponto que tem em baixo da imagem
+              //Ou seja para saber qual a imagem que estou
+              dotSize: 4.0,
+              //Espaçamento entre os pontos, ou seja do tamanho da imagem
+              dotSpacing: 15.0,
+              //BackGround do ponto
+              dotBgColor: Colors.transparent,
+              dotColor: primaryColor,
+              //Para as imagens não mudar automaticamente as imagens.
+              autoplay: false,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              //Coloquei o stretch para ocupar o máximo de espaço.
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  produto.titulo,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  //Definindo quantidade máxima de linhas
+                  maxLines: 3,
+                ),
+                Text(
+                  "R\$ ${produto.preco.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ) ,
+    );
   }
 }
