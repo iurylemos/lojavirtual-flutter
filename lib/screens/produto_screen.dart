@@ -34,7 +34,7 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
   _ProdutoScreenState(this.produto);
 
   //Variavel para tamanho que o usuário tiver selecionado da roupa
-  String size;
+  String tamanhoselecionado;
 
   @override
   Widget build(BuildContext context) {
@@ -143,15 +143,15 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                       //Que me retorna String vou mapea-la e transformar-la em
                       //outro tipo de lista
                       children: produto.sizes.map(
-                          (s) {
+                          (size) {
                               return GestureDetector(
                                 //Quando ele clicar na caixinha o tamanho vai ser o Size
                                 onTap: () {
                                   setState(() {
-                                    if(size == s) {
-                                     size = null;
+                                    if(tamanhoselecionado == size) {
+                                     tamanhoselecionado = null;
                                     }else {
-                                      size = s;
+                                      tamanhoselecionado = size;
                                     }
                                   });
                                 },
@@ -162,7 +162,7 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                                     border: Border.all(
                                       //Se a cor selecionada for igual a size
                                       //Eu mostro a cor primaria, se não mostro o cinza básico
-                                      color: s == size ? primaryColor: Colors.grey[500],
+                                      color: size == tamanhoselecionado ? primaryColor: Colors.grey[500],
                                       width: 3.0,
                                     )
                                   ),
@@ -170,7 +170,7 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                                   width: 50.0,
                                   //Alinhamento do texto dentro do container
                                   alignment: Alignment.center,
-                                  child: Text(s),
+                                  child: Text(size),
                                 ),
                               );
                           }
@@ -187,7 +187,7 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                      * Vou fazer a seguinte validação, enquanto ele não escolher um tamanho
                      * o botão fique desabilitado, e só quando ele escolher fique habilitado
                      */
-                      onPressed: size != null ? () {} : null,
+                      onPressed: tamanhoselecionado != null ? () {} : null,
                     child: Text("Adicionar ao Carrinho",
                         style: TextStyle(fontSize: 18.0),
                     ),
