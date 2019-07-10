@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/cadastro_screen.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -40,68 +42,93 @@ class LoginScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Form(
-        key: _formKey,
-          child: ListView(
-            padding: EdgeInsets.all(16.0),
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: "E-mail"
-                ),
-                keyboardType: TextInputType.emailAddress,
-                //Validação do campo email
-                validator: (text) {
-                  //Se o texto estiver vázio ou se não contem o arroba
-                  if(text.isEmpty || !text.contains("@")) return "E-mail invalido!";
-                },
-              ),
-              SizedBox(height: 16.0,),
-              TextFormField(
-                decoration: InputDecoration(
-                    hintText: "Senha"
-                ),
-                //Quero que a senha fique obscura, ou seja não veja a senha
-                obscureText: true,
-                validator: (text) {
-                  //Se o texto estiver vázio ou se tem menor do que 6 caracteres
-                  if(text.isEmpty || text.length < 6) return "Senha invalida!";
-                },
-              ),
-              //Botão de esqueci a senha, quero alinhar do lado esquerdo
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                    onPressed: () {},
-                    child: Text("Esqueci a minha senha",
-                    textAlign: TextAlign.right,
+        /**
+         * Botei o formulário dentro do ScopedModelDescedant
+         * Que é uma forma de acessar o Modelo que é o UserModel
+         * E quando eu realizar alguma coisa no UserModel
+         * Ele vai afetar toda essa parte que está abaixo do ScopedModelDescendant
+         * Ou seja ela vai ser reconstruida quando eu utilizar o notifyListeners
+         * que está no UserModel, que tem as informações do usuário logado
+         * e o que poder ser modificado.
+         * E com isso eu tenho acesso ao MODEL = USUARIOLOGADO
+         * posso verificar o estado do modelo, e verificar
+         * as funções para modificar o estado dele.
+         *
+         * Sempre que eu quiser ter acesso ao usuário atual
+         * basta eu colocar o ScopedModelDescendent, em qualquer
+         * lugar do app, que eu vou ter acesso ao usuário Atual.
+         */
+      body: ScopedModelDescendant<UserModel>(
+          builder: (context, child, model) {
+            if(model.estaCarregando) {
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return Form(
+                key: _formKey,
+                child: ListView(
+                  padding: EdgeInsets.all(16.0),
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "E-mail"
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      //Validação do campo email
+                      validator: (text) {
+                        //Se o texto estiver vázio ou se não contem o arroba
+                        if(text.isEmpty || !text.contains("@")) return "E-mail invalido!";
+                      },
                     ),
-                  //Retirando o espaço do botão lá no final em branco.
-                  padding: EdgeInsets.zero,
-                ),
-              ),
-              SizedBox(height: 7.0,),
-              SizedBox(
-                height: 44.0,
-                child: RaisedButton(
-                  child: Text("Entrar",
-                    style: TextStyle(
-                      fontSize: 18.0,
+                    SizedBox(height: 16.0,),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Senha"
+                      ),
+                      //Quero que a senha fique obscura, ou seja não veja a senha
+                      obscureText: true,
+                      validator: (text) {
+                        //Se o texto estiver vázio ou se tem menor do que 6 caracteres
+                        if(text.isEmpty || text.length < 6) return "Senha invalida!";
+                      },
                     ),
-                  ),
-                  textColor: Colors.white,
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    //Se for válido ele entra aqui.
-                      if(_formKey.currentState.validate()) {
-                        
-                      }
-                  },
-                ),
-              )
-            ],
-          )
-      ),
+                    //Botão de esqueci a senha, quero alinhar do lado esquerdo
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: FlatButton(
+                        onPressed: () {},
+                        child: Text("Esqueci a minha senha",
+                          textAlign: TextAlign.right,
+                        ),
+                        //Retirando o espaço do botão lá no final em branco.
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                    SizedBox(height: 7.0,),
+                    SizedBox(
+                      height: 44.0,
+                      child: RaisedButton(
+                        child: Text("Entrar",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        textColor: Colors.white,
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          //Se for válido ele entra aqui.
+                          if(_formKey.currentState.validate()) {
+
+                          }
+
+                          model.login();
+                        },
+                      ),
+                    )
+                  ],
+                )
+            );
+          },
+      )
     );
   }
 }
