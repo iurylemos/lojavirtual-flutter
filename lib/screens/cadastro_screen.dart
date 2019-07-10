@@ -1,53 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/screens/cadastro_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class CadastroScreen extends StatelessWidget {
 
   //Para acionar os validadores e quero acessar o formulário
   //Vou utilizar uma variavel global
   //Para utilizar o validate, e acessar o Sistema.
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Entrar"),
+        title: Text("Criar Conta"),
         centerTitle: true,
-        //Botão do lado esquerdo
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              "CRIAR CONTA",
-              style: TextStyle(
-                fontSize: 15.0
-              ),
-            ),
-            textColor: Colors.white,
-            onPressed: () {
-              /**Vou botar esse tipo de push, pois quero que quando el
-               * Ele faça login, ele já fique autenticado no Sistema,
-               * E não tenha que fazer login novamente.
-               * E assim ele não vai ter o botão de voltar na app bar.
-               * Pois estou substituindo a tela, e não botando em cima
-               * que é o PUSH
-               */
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => CadastroScreen())
-              );
-            },
-          )
-        ],
       ),
       body: Form(
-        key: _formKey,
+          key: _formKey,
           child: ListView(
             padding: EdgeInsets.all(16.0),
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(
-                  hintText: "E-mail"
+                    hintText: "Nome Completo"
+                ),
+                //Validação do campo email
+                validator: (text) {
+                  //Se o texto estiver vázio
+                  if(text.isEmpty) return "Nome inválido!";
+                },
+              ),
+              SizedBox(height: 16.0,),
+              TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Endereço Completo"
+                ),
+                //Validação do campo email
+                validator: (text) {
+                  //Se o texto estiver vázio
+                  if(text.isEmpty) return "Endereço inválido!";
+                },
+              ),
+              SizedBox(height: 16.0,),
+              TextFormField(
+                decoration: InputDecoration(
+                    hintText: "E-mail"
                 ),
                 keyboardType: TextInputType.emailAddress,
                 //Validação do campo email
@@ -68,23 +64,11 @@ class LoginScreen extends StatelessWidget {
                   if(text.isEmpty || text.length < 6) return "Senha invalida!";
                 },
               ),
-              //Botão de esqueci a senha, quero alinhar do lado esquerdo
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                    onPressed: () {},
-                    child: Text("Esqueci a minha senha",
-                    textAlign: TextAlign.right,
-                    ),
-                  //Retirando o espaço do botão lá no final em branco.
-                  padding: EdgeInsets.zero,
-                ),
-              ),
-              SizedBox(height: 7.0,),
+              SizedBox(height: 16.0,),
               SizedBox(
                 height: 44.0,
                 child: RaisedButton(
-                  child: Text("Entrar",
+                  child: Text("Cadastrar",
                     style: TextStyle(
                       fontSize: 18.0,
                     ),
@@ -93,9 +77,9 @@ class LoginScreen extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   onPressed: () {
                     //Se for válido ele entra aqui.
-                      if(_formKey.currentState.validate()) {
-                        
-                      }
+                    if(_formKey.currentState.validate()) {
+
+                    }
                   },
                 ),
               )

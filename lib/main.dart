@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/screens/cadastro_screen.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromARGB(255, 4, 125, 141),
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen()
+      home: HomeScreen()
     );
   }
 }
