@@ -105,8 +105,22 @@ class UserModel extends Model {
   }
 
   bool verificarUsuarioLogado() {
-
+    //Se o usuário atual for diferente de nulo, ele vai retonar true
+    //indicando que tem um usuário logado
+    return firebaseUser != null;
   }
+
+  //Função para deslogar.
+  void deslogar() async {
+      await _auth.signOut();
+      //Resetar os dados do usuário
+      dadosUsuario = Map();
+      //Usuário deslogado
+      firebaseUser = null;
+      notifyListeners();
+  }
+
+
 
   /**Função para salvar os dados do usuário no Firestore
    * Como essa função vai ser acessada apenas dentro dessa classe

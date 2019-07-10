@@ -23,9 +23,20 @@ class _CadastroScreenState extends State<CadastroScreen> {
   //Para utilizar o validate, e acessar o Sistema.
   final _formKey = GlobalKey<FormState>();
 
+
+  /**
+   * Criando uma chave para que quando o usuário fizer o login
+   * Ele apresente uma barra abaixo dizendo que o login ocorreu com sucesso.
+   *
+   * Para acessar a essa barra, preciso acessar o Scaffold
+   *
+   */
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Criar Conta"),
           centerTitle: true,
@@ -134,13 +145,29 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   //Função de login com sucesso
   void _onSucess() {
-
+    //Barrinha abaixo informando que o usuário foi criado com sucesso
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text("Usuário criado com sucesso!"),
+      backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 3),
+      ),
+    );
+    //Fechar essa página e ir para a principal
+    //Depois de 3 segundos, ele vai chamar a função
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      Navigator.of(context).pop();
+    });
   }
 
 
   //Função de falha no login
   void _onFailed() {
-
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text("Falha ao criar usuário!"),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
 }
