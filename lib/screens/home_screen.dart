@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:loja_virtual/tabs/produtos_tab.dart';
+import 'package:loja_virtual/widgets/cart_button.dart';
 import 'package:loja_virtual/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +15,8 @@ class HomeScreen extends StatelessWidget {
     //Pagina para outra, utiliza PageView
     return PageView(
       controller: _pageController,
-      /**Fisica para não permitir arrastar de tela em tela.
+      /*
+       Fisica para não permitir arrastar de tela em tela.
        * Vou controlar somente pelo código
        *
        * Passo esse controle de páginas para o  Drawer onde tem acesso as páginas de lá
@@ -26,6 +28,7 @@ class HomeScreen extends StatelessWidget {
         Scaffold(
           body: HomeTab(),
           drawer: CustomDrawer(_pageController),
+          floatingActionButton: CartButton(),
         ),
         //Criando paginas de testes com o Container.
         Scaffold(
@@ -35,6 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
           drawer: CustomDrawer(_pageController),
           body: ProdutosTab(),
+          floatingActionButton: CartButton(),
         ),
         Container(color: Colors.black,),
         Container(color: Colors.blue,),

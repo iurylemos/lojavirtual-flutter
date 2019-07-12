@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
-import 'package:loja_virtual/screens/cadastro_screen.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
-import 'package:loja_virtual/screens/login_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
 
-  /**
+  /*
    * Como estou utilizando o ScopedModel que vale para toda a aplicação
    * Vou utiliza-lo aqui no Main, pois ele pega o MaterialApp inteiro
    * Tudo que estiver abaixo do ScopedModel vai ter acesso ao UserModel

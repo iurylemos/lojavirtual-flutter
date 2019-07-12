@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/**
+/*
     Classe para amazernar os dados do meu produto
  */
 
@@ -19,7 +19,7 @@ class ProdutoDado {
   List imagens;
   List sizes;
 
-/**
+/*
  * É importante saber que eu vou pegar os dados do firebase e transformar nesses dados
  */
 

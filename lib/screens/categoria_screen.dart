@@ -6,13 +6,15 @@ import 'package:loja_virtual/tiles/produto_tile.dart';
 class CategoriaScreen extends StatelessWidget {
 
 
-  //Essa é a tela da Categoria, que tem as blusas e etc..
-  //Em forma de lista ou de GRID.
-  //Ele busca todos os produtos que tem nessa categoria
-  //E chama o snpshot dentro do builder do FutureBuilder
-  //Que contém cada um dos meus produtos.
+  /*
+    Essa é a tela da Categoria, que tem as blusas e etc..
+   Em forma de lista ou de GRID.
+   Ele busca todos os produtos que tem nessa categoria
+   E chama o snpshot dentro do builder do FutureBuilder
+   Que contém cada um dos meus produtos. */
 
-  /**Construtor que recebe o documento da Categoria
+  /*
+  Construtor que recebe o documento da Categoria
    * Esse documento vai dizer qual o id da categoria e o titulo
    *
    * Vou chamar essa tela aqui lá do Categoria Tile
@@ -64,7 +66,7 @@ class CategoriaScreen extends StatelessWidget {
                         ),
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index) {
-                          /**
+                          /*
                            * Dentro do construtor do ProdutoTile, eu quero especificar que vai ser do tipo grid
                            * E ele vai ter os dados do produto, eu não vou passar os produtos no
                            * formato de snapshot, eu vou passar no formato de ProdutoDado

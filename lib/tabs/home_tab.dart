@@ -51,7 +51,8 @@ class HomeTab extends StatelessWidget {
                 centerTitle: true,
               ),
             ),
-            /**Botendo os dados do firebase, como ele não é instantaniamente
+            /* 
+              obtendo os dados do firebase, como ele não é instantaniamente
              * Utilizo o FutureBuilder, pois vou mostrar na tela que está carregando.
              */
             FutureBuilder<QuerySnapshot>(
@@ -59,7 +60,7 @@ class HomeTab extends StatelessWidget {
                   .collection("home")
                   .orderBy("pos")
                   .getDocuments(),
-              /** builder é a função que vai criar o que vai ter na tela
+              /* builder é a função que vai criar o que vai ter na tela
                * dependendo do que o meu future trazer.
                */
               builder: (context, snapshot) {
@@ -79,7 +80,7 @@ class HomeTab extends StatelessWidget {
                   //Caso eu tenha algum DADO
                 } else {
                   return SliverStaggeredGrid.count(
-                    /**
+                    /*
                      * Estou criando um grid para colocar as imagens.
                      * E botei o count pois sei o tamanho exato que quero colocar
                      * No crosAxisCount vou dizer o tanto de blocos que tenho na
@@ -88,7 +89,7 @@ class HomeTab extends StatelessWidget {
                       crossAxisCount: 2,
                     mainAxisSpacing: 1.0,
                     crossAxisSpacing: 1.0,
-                    /** dimensões de cada uma das tiles e passar uma lista
+                    /* dimensões de cada uma das tiles e passar uma lista
                      * Vou pegar cada um dos documentos e pegar o x e y
                      * de cada um dos documentos,transforma-los do tipo
                      * StaggeredTiles e colocar eles em uma lista
@@ -126,7 +127,7 @@ class HomeTab extends StatelessWidget {
                   );
                 }
               },
-            )
+            ),
           ],
         )
       ],

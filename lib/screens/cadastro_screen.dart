@@ -24,7 +24,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   final _formKey = GlobalKey<FormState>();
 
 
-  /**
+  /*
    * Criando uma chave para que quando o usuário fizer o login
    * Ele apresente uma barra abaixo dizendo que o login ocorreu com sucesso.
    *

@@ -43,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               textColor: Colors.white,
               onPressed: () {
-                /**Vou botar esse tipo de push, pois quero que quando el
+                /*
+                  Vou botar esse tipo de push, pois quero que quando el
                  * Ele faça login, ele já fique autenticado no Sistema,
                  * E não tenha que fazer login novamente.
                  * E assim ele não vai ter o botão de voltar na app bar.
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ],
         ),
-        /**
+        /*
          * Botei o formulário dentro do ScopedModelDescedant
          * Que é uma forma de acessar o Modelo que é o UserModel
          * E quando eu realizar alguma coisa no UserModel

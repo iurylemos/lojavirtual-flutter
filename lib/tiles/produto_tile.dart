@@ -3,7 +3,7 @@ import 'package:loja_virtual/dados/produto_dado.dart';
 import 'package:loja_virtual/screens/produto_screen.dart';
 
 class ProdutoTile extends StatelessWidget {
-  /**
+  /*
    * Classe  responsável por exbiri a janela que vai ser os dados do produto.
    * E mostrar na tela, a GRID ou LISTA dos produtos.
    */

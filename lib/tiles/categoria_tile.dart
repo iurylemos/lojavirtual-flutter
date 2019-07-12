@@ -4,7 +4,8 @@ import 'package:loja_virtual/screens/categoria_screen.dart';
 
 class CategoriaTile extends StatelessWidget {
 
-  /**Essa classe vai receber o documento que obtive do Banco de dados
+  /*
+    Essa classe vai receber o documento que obtive do Banco de dados
    * Ele vai pegar os dados que são o nome da categoria e o icone da categoria
    */
 

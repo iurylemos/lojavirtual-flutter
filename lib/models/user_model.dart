@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-/**
+/*
  * Importo do scopedModel para valer para toda a aplicação
  * E na minha classe herdo do Model
  * MODEL = É o objeto que vai guardar os estados de alguma coisa.
@@ -18,7 +18,8 @@ class UserModel extends Model {
   //Estou fazendo isso para não ter que ficar dando FirebaseAuth.instance direto..
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  /**Usuário atual logado no momento
+  /*
+    Usuário atual logado no momento
    * Se não tiver nenhum usuário, ele vai estar null
    * se tiver ele vai conter o ID do usuário e informações básicas
    */
@@ -115,7 +116,7 @@ class UserModel extends Model {
     @required VoidCallback onSucess, @required VoidCallback onFailed}) async
   {
     estaCarregando = true;
-    /**
+    /*
      * Quando utilizo o notifyListeners, tudo que estiver dentro
      * do scopedModelDescendent lá no LoginScreen será recriado
      * na tela
@@ -172,7 +173,7 @@ class UserModel extends Model {
 
 
 
-  /**Função para salvar os dados do usuário no Firestore
+  /*Função para salvar os dados do usuário no Firestore
    * Como essa função vai ser acessada apenas dentro dessa classe
    * Coloquei o anderline_, para saber que ela é uma função da classe.
    */
@@ -185,7 +186,7 @@ class UserModel extends Model {
     await Firestore.instance.collection("usuarios").document(firebaseUser.uid).setData(dadosUsuario);
   }
 
-/**
+/*
  * Função para pegar os dados do usuário lá no Banco de Dados.
  */
 

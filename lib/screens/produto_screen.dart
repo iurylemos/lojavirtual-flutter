@@ -8,7 +8,7 @@ import 'package:loja_virtual/screens/login_screen.dart';
 
 class ProdutoScreen extends StatefulWidget {
 
-  /**
+  /*
    * Classe responsável por exibir os dados do produto CLICADO no PRODUTOTILE
    */
 
@@ -26,7 +26,7 @@ class ProdutoScreen extends StatefulWidget {
 
 class _ProdutoScreenState extends State<ProdutoScreen> {
 
-  /**
+  /*
    * Se eu quiser acessar esse produto dentro do meu State
    * basta eu utilizar o widget.produto
    * ou criar um construtor para o State e ele seja igual ao construtor
