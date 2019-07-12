@@ -30,6 +30,21 @@ class UserModel extends Model {
   bool estaCarregando = false;
 
   /**
+   * A função carregar usuário vou botar quando iniciar o aplicativo.
+   * Verificar se o usuário já logou alguma vez.
+   * Aperto CRTL + O
+   * E sobrescrevo o metodo addListener
+   */
+
+
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(listener);
+
+    _carregandoUsuarioAtual();
+  }
+
+  /**
    Função de Login do usuario
    Void calback é uma função que vamos passar, e ela vai ser chamada aqui dentro
    Da função.
@@ -78,7 +93,9 @@ class UserModel extends Model {
       quero carregar os meus pedidos, e modificar o meu carrinho
       Quero que essa ação faça esse efeito em todos o app.
    */
-  void login() async {
+  void login({@required String email, @required String senha,
+    @required VoidCallback onSucess, @required VoidCallback onFailed}) async
+  {
     estaCarregando = true;
     /**
      * Quando utilizo o notifyListeners, tudo que estiver dentro
@@ -89,19 +106,34 @@ class UserModel extends Model {
     //Ou seja indico para todos o que estou fazendo.
     notifyListeners();
 
-    //Simular processo de login
-    //Esperando 3 segundos
-    await Future.delayed(Duration(seconds: 3));
+    //Then pois essa função me retorna um futuro.
+    _auth.signInWithEmailAndPassword(email: email, password: senha).then(
+        (usuario) async {
+          //Se entrar aqui é por que deu sucesso com o login do usuário
+          //E eu vou salvar ele no firebase.
 
-    //Vou falar que não estou mais carregando e mostrar na view.
-    estaCarregando = false;
-    notifyListeners();
+          //Salvando o usuário
+          firebaseUser = usuario;
+
+          //Pegando o metodo que carrega os dados do usuário.
+          await _carregandoUsuarioAtual();
+
+          onSucess();
+          //Não está mais carregando
+          estaCarregando = false;
+          notifyListeners();
+        }
+    ).catchError((e){
+        onFailed();
+        estaCarregando = false;
+        notifyListeners();
+    });
 
   }
 
   //Resetar Senha
-  void resetarSenha() {
-
+  void resetarSenha(String email) {
+      _auth.sendPasswordResetEmail(email: email);
   }
 
   bool verificarUsuarioLogado() {
@@ -134,5 +166,34 @@ class UserModel extends Model {
     //E seto os dados do usuário.
     await Firestore.instance.collection("usuarios").document(firebaseUser.uid).setData(dadosUsuario);
   }
+
+/**
+ * Função para pegar os dados do usuário lá no Banco de Dados.
+ */
+
+Future<Null> _carregandoUsuarioAtual() async {
+    //Verificar se o usuário é nulo
+    //Se não temos usuário logado ainda
+    if(firebaseUser == null) {
+      //Vou pegar o usuário atual
+      //Pegando o usuário no Firebase, caso não tenha nenhum logado.
+      firebaseUser = await _auth.currentUser();
+    }
+
+    //Se tiver usuário logado
+    if(firebaseUser != null) {
+      //Vou pegar os dados do usuário
+      //Se ele tem um nome
+      if(dadosUsuario["nome"] == null) {
+        //Pegando o documento
+        DocumentSnapshot docUsuario =
+        await Firestore.instance.collection("usuarios").document(firebaseUser.uid).get();
+        //Pegando os dados do documento
+        dadosUsuario = docUsuario.data;
+      }
+    }
+    notifyListeners();
+}
+
 
 }
