@@ -33,4 +33,16 @@ class ProdutoDado {
     sizes = snapshot.data["sizes"];
   }
 
+  //Função para mostrar o resumo de cada produto que vai ter no carrinho
+  Map<String, dynamic> toResumeMap() {
+    /*Aqui vou retornar apenas as coisas importantes que quero
+    Apresentar na tela. */
+
+    return {
+      "titulo": titulo,
+      "descricao" : descricao,
+      "preco" : preco
+    };
+  }
+
 }

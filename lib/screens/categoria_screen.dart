@@ -5,6 +5,13 @@ import 'package:loja_virtual/tiles/produto_tile.dart';
 
 class CategoriaScreen extends StatelessWidget {
 
+
+  //Essa é a tela da Categoria, que tem as blusas e etc..
+  //Em forma de lista ou de GRID.
+  //Ele busca todos os produtos que tem nessa categoria
+  //E chama o snpshot dentro do builder do FutureBuilder
+  //Que contém cada um dos meus produtos.
+
   /**Construtor que recebe o documento da Categoria
    * Esse documento vai dizer qual o id da categoria e o titulo
    *
@@ -76,7 +83,10 @@ class CategoriaScreen extends StatelessWidget {
                            *
                            *
                            */
-                            return ProdutoTile("grid", ProdutoDado.fromDocument(snapshot.data.documents[index]));
+                            ProdutoDado dado = ProdutoDado.fromDocument(snapshot.data.documents[index]);
+                            dado.categoria = this.snapshot.documentID;
+
+                            return ProdutoTile("grid", dado);
                         }
                     ),
                     //Criando a lista, se não é do tipo grid, é do tipo lista.
@@ -84,7 +94,23 @@ class CategoriaScreen extends StatelessWidget {
                         padding: EdgeInsets.all(4.0),
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index) {
-                          return ProdutoTile("list", ProdutoDado.fromDocument(snapshot.data.documents[index]));
+                        
+
+                          //Seto a categoria aqui dentro, já que não tinha setado ainda.
+                          ProdutoDado dado = ProdutoDado.fromDocument(snapshot.data.documents[index]);
+                            //Usei o this, pois tenho dois snapshot
+                            //O 1º Diz qual categoria é
+                            //O 2º Cada documento da nossa categoria (CADA PRODUTO DA CATEGORIA)
+                            //Salvando a categoria do produto, dentro do nosso próprio produto
+                            //Para utilizar depois.
+                            /*
+                              E com isso eu estou setando uma categoria ao meu produto
+                              E assim o acesso a categoria é possível
+                              Posso passar ela para o Carrinho de produtos.
+                            */
+                            dado.categoria = this.snapshot.documentID;
+                            //Transformo o documento do produto em ProdutoDado
+                          return ProdutoTile("list", dado);
                         }
 
                     ),

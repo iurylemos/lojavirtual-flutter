@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/dados/produto_cart.dart';
 import 'package:loja_virtual/dados/produto_dado.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:loja_virtual/models/cart_model.dart';
+import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/screens/login_screen.dart';
 
 class ProdutoScreen extends StatefulWidget {
 
@@ -187,8 +191,39 @@ class _ProdutoScreenState extends State<ProdutoScreen> {
                      * Vou fazer a seguinte validação, enquanto ele não escolher um tamanho
                      * o botão fique desabilitado, e só quando ele escolher fique habilitado
                      */
-                      onPressed: tamanhoselecionado != null ? () {} : null,
-                    child: Text("Adicionar ao Carrinho",
+                      onPressed: tamanhoselecionado != null ? () {
+                        /* Vou botar a seguinte validação
+                        Se o usuário não estiver logado, ele não vai
+                        ter a opção de Adicionar ao carrinho */
+                        if(UserModel.of(context).verificarUsuarioLogado()) {
+
+                          ProdutoCart produtoCart = ProdutoCart();
+                          produtoCart.sizes = tamanhoselecionado;
+                          produtoCart.quantidade = 1;
+                          produtoCart.produtoId = produto.id;
+                          produtoCart.categoria = produto.categoria;
+
+                          /* Adiciono ao carrinho
+                            Vou botar o carrinho como stático igual fiz no UserModel
+                            Pois assim não vou precisar utilizar O ScopedModelDescendant
+                             */
+                            CartModel.of(context).addCartItem(produtoCart);
+
+                        }else {
+                          //Abrir a tela para o usuário logar
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: 
+                                (context) {
+                                  return LoginScreen();
+                                })
+                          );
+                        }
+
+                      } : null,
+                      //Se o usuário estiver logado ele vai apresentar outro nome no botão
+                    child: Text(UserModel.of(context).verificarUsuarioLogado() ? "Adicionar ao Carrinho" 
+                    : "Entre para Comprar" ,
                         style: TextStyle(fontSize: 18.0),
                     ),
                     color: primaryColor,

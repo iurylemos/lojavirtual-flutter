@@ -29,14 +29,28 @@ class UserModel extends Model {
 
   bool estaCarregando = false;
 
-  /**
+
+  //Metodo estático, que é um atributo da classe.
+  /*
+    Com esse metodo agora, eu sou capaz de acessar o UsuarioAtual
+    que é o UserModel de qualquer lugar do aplicativo
+    E assim eu não vou precisar mais utilizar o ScopedModelDescendent
+    Basta utilizar o User
+
+    Basta utilizar UserModel.of(context)..
+   */
+  static UserModel of(BuildContext context) {
+    return ScopedModel.of<UserModel>(context);
+  }
+
+
+
+  /*
    * A função carregar usuário vou botar quando iniciar o aplicativo.
    * Verificar se o usuário já logou alguma vez.
    * Aperto CRTL + O
    * E sobrescrevo o metodo addListener
    */
-
-
   @override
   void addListener(VoidCallback listener) {
     super.addListener(listener);
@@ -44,7 +58,10 @@ class UserModel extends Model {
     _carregandoUsuarioAtual();
   }
 
-  /**
+
+
+
+  /*
    Função de Login do usuario
    Void calback é uma função que vamos passar, e ela vai ser chamada aqui dentro
    Da função.
@@ -66,12 +83,12 @@ class UserModel extends Model {
       _auth.createUserWithEmailAndPassword(
           email: dadosUsuario["email"],
           password: senha,
-        /**Depois que ele processar isso aqui
+        /*Depois que ele processar isso aqui
           ele chama a função que está dentro do THEN
           Como isso me retorna um futuro, vou colocar o then
           Essa função recebe o usuário do FIREBASE */
       ).then((usuario) async {
-          /**Se tudo der certo, vou salvar o usuário */
+          /* Se tudo der certo, vou salvar o usuário */
         firebaseUser = usuario;
 
       //Salvando no firebase, para poder utilizar no futuro.
@@ -88,11 +105,12 @@ class UserModel extends Model {
       });
   }
 
-  /**
+  /*
       Quando eu realizar o login, eu quero que apareça no drawer,
       quero carregar os meus pedidos, e modificar o meu carrinho
       Quero que essa ação faça esse efeito em todos o app.
    */
+
   void login({@required String email, @required String senha,
     @required VoidCallback onSucess, @required VoidCallback onFailed}) async
   {
